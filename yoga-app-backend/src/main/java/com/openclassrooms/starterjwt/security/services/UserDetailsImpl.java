@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,6 +16,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 public class UserDetailsImpl implements UserDetails {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -31,7 +34,7 @@ public class UserDetailsImpl implements UserDetails {
     private String password;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new HashSet<GrantedAuthority>();
+        return new HashSet<>();
     }
 
     @Override

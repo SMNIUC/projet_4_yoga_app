@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     UserRepository userRepository;
 
     UserDetailsServiceImpl(UserRepository userRepository) {
@@ -31,5 +32,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .password(user.getPassword())
                 .build();
     }
-
 }

@@ -1,6 +1,5 @@
 package com.openclassrooms.starterjwt.models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -42,6 +41,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class Session {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

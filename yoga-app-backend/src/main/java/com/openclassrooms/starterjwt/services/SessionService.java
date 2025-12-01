@@ -6,28 +6,29 @@ import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.SessionRepository;
 import com.openclassrooms.starterjwt.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SessionService {
+
     private final SessionRepository sessionRepository;
-
     private final UserRepository userRepository;
-
-    public SessionService(SessionRepository sessionRepository, UserRepository userRepository) {
-        this.sessionRepository = sessionRepository;
-        this.userRepository = userRepository;
-    }
 
     public Session create(Session session) {
         return this.sessionRepository.save(session);
     }
 
     public void delete(Long id) {
-        this.sessionRepository.deleteById(id);
+        if (this.getById(id) != null) {
+            this.sessionRepository.deleteById(id);
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     public List<Session> findAll() {
@@ -35,7 +36,9 @@ public class SessionService {
     }
 
     public Session getById(Long id) {
-        return this.sessionRepository.findById(id).orElse(null);
+        Session session = this.sessionRepository.findById(id).orElse(null);
+        if (session == null) throw new NotFoundException();
+        return session;
     }
 
     public Session update(Long id, Session session) {

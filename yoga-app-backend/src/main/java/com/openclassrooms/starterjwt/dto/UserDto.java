@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+
     private Long id;
 
     @NonNull
@@ -29,7 +30,6 @@ public class UserDto {
     @Size(max = 20)
     private String firstName;
 
-    @NonNull
     private boolean admin;
 
     @JsonIgnore
