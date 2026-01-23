@@ -18,6 +18,7 @@ export class RegisterComponent {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   public onError = false;
+  public error: string | undefined;
 
   public form = this.fb.group({
     email: [
@@ -57,7 +58,10 @@ export class RegisterComponent {
     const registerRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: () => this.router.navigate(['/login']),
-        error: (err: Error) => this.onError = true
+        error: (err: any) => {
+          this.onError = true;
+          this.error = err.error?.message || err.message;
+        }
       }
     );
   }

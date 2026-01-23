@@ -19,12 +19,14 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 })
 export class FormComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly fb = inject(FormBuilder);
-  private readonly matSnackBar = inject(MatSnackBar);
-  private readonly sessionApiService = inject(SessionApiService);
-  private readonly sessionService = inject(SessionService);
-  private readonly teacherService = inject(TeacherService);
   private readonly router = inject(Router);
+  private readonly matSnackBar = inject(MatSnackBar);
+  private readonly fb = inject(FormBuilder);
+
+  private readonly sessionService = inject(SessionService);
+  private readonly sessionApiService = inject(SessionApiService);
+  private readonly teacherService = inject(TeacherService);
+
   private readonly destroyRef = inject(DestroyRef);
 
   public onUpdate: boolean = false;
@@ -47,7 +49,7 @@ export class FormComponent implements OnInit {
     } else {
       this.initForm();
     }
-  }
+  };
 
   public submit(): void {
     const session = this.sessionForm?.value as Session;
@@ -63,7 +65,7 @@ export class FormComponent implements OnInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => this.exitPage('Session created !'));
     }
-  }
+  };
 
   private initForm(session?: Session): void {
     this.sessionForm = this.fb.group({
@@ -87,10 +89,10 @@ export class FormComponent implements OnInit {
         ]
       ],
     });
-  }
+  };
 
   private exitPage(message: string): void {
     this.matSnackBar.open(message, 'Close', { duration: 3000 });
     this.router.navigate(['sessions']);
-  }
+  };
 }

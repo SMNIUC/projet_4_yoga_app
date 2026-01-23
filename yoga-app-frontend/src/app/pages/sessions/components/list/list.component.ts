@@ -23,5 +23,5 @@ export class ListComponent {
 
   get user(): SessionInformation | undefined {
     return this.sessionService.sessionInformation;
-  }
+  };
 }

@@ -1,7 +1,8 @@
-import 'jest-preset-angular/setup-jest';
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 
-/* global mocks for jsdom */
-const mock = () => {
+setupZoneTestEnv();
+
+const createStorageMock = () => {
   let storage: { [key: string]: string } = {};
   return {
     getItem: (key: string) => (key in storage ? storage[key] : null),
@@ -11,20 +12,19 @@ const mock = () => {
   };
 };
 
-Object.defineProperty(globalThis, 'localStorage', { value: mock() });
-Object.defineProperty(globalThis, 'sessionStorage', { value: mock() });
+Object.defineProperty(globalThis, 'localStorage', { value: createStorageMock() });
+Object.defineProperty(globalThis, 'sessionStorage', { value: createStorageMock() });
+
 Object.defineProperty(globalThis, 'getComputedStyle', {
   value: () => ['-webkit-appearance'],
 });
 
 Object.defineProperty(document.body.style, 'transform', {
-  value: () => {
-    return {
-      enumerable: true,
-      configurable: true,
-    };
-  },
+  value: () => ({
+    enumerable: true,
+    configurable: true,
+  }),
 });
 
-/* output shorter and more meaningful Zone error stack traces */
+// Optional: Uncomment this line for shorter error stack traces
 // Error.stackTraceLimit = 2;

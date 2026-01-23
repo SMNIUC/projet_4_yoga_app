@@ -1,5 +1,4 @@
 import { Component, OnInit, inject, DestroyRef } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Teacher } from '../../../../core/models/teacher.interface';
@@ -19,6 +18,16 @@ import { FlexLayoutModule } from "@angular/flex-layout";
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly matSnackBar = inject(MatSnackBar);
+
+  private readonly sessionService = inject(SessionService);
+  private readonly sessionApiService = inject(SessionApiService);
+  private readonly teacherService = inject(TeacherService);
+
+  private readonly destroyRef = inject(DestroyRef);
+
   public session: Session | undefined;
   public teacher: Teacher | undefined;
   public isParticipate = false;
@@ -26,27 +35,19 @@ export class DetailComponent implements OnInit {
   public sessionId: string;
   public userId: string;
 
-  private readonly route = inject(ActivatedRoute);
-  private readonly sessionService = inject(SessionService);
-  private readonly sessionApiService = inject(SessionApiService);
-  private readonly teacherService = inject(TeacherService);
-  private readonly matSnackBar = inject(MatSnackBar);
-  private readonly router = inject(Router);
-  private readonly destroyRef = inject(DestroyRef);
-
   constructor() {
     this.sessionId = this.route.snapshot.paramMap.get('id')!;
     this.isAdmin = this.sessionService.sessionInformation!.admin;
     this.userId = this.sessionService.sessionInformation!.id.toString();
-  }
+  };
 
   ngOnInit(): void {
     this.fetchSession();
-  }
+  };
 
   public back(): void {
     globalThis.history.back();
-  }
+  };
 
   public delete(): void {
     this.sessionApiService
@@ -57,15 +58,19 @@ export class DetailComponent implements OnInit {
           this.router.navigate(['sessions']);
         }
       );
-  }
+  };
 
   public participate(): void {
-    this.sessionApiService.participate(this.sessionId, this.userId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(_ => this.fetchSession());
-  }
+    this.sessionApiService.participate(this.sessionId, this.userId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(_ => this.fetchSession());
+  };
 
   public unParticipate(): void {
-    this.sessionApiService.unParticipate(this.sessionId, this.userId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(_ => this.fetchSession());
-  }
+    this.sessionApiService.unParticipate(this.sessionId, this.userId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(_ => this.fetchSession());
+  };
 
   private fetchSession(): void {
     this.sessionApiService
@@ -79,5 +84,5 @@ export class DetailComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((teacher: Teacher) => this.teacher = teacher);
       });
-  }
+  };
 }
