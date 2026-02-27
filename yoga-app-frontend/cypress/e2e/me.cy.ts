@@ -1,4 +1,4 @@
-describe('Me page', () => {
+describe('Me spec', () => {
   it('shows user information and can delete a non-admin account', () => {
     // stub login response to create a session in the app
     cy.intercept('POST', '/api/auth/login', {
@@ -38,8 +38,8 @@ describe('Me page', () => {
 
     // visit login and perform login to set the in-memory session
     cy.visit('/login')
-    cy.get('input[formControlName=email]').type("yoga@studio.com")
-    cy.get('input[formControlName=password]').type("test!1234")
+    cy.get('input[formControlName=email]').type('yoga@studio.com')
+    cy.get('input[formControlName=password]').type('test!1234')
     cy.get('button[type=submit]').click()
     cy.wait('@login')
 
