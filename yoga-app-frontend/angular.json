@@ -72,7 +72,7 @@
               "namedChunks": true,
               "vendorChunk": true,
               "customWebpackConfig": {
-                "path": "./cypress/coverage.webpack.ts"
+                "path": "./cypress/webpack.coverage.ts"
               }
             }
           },

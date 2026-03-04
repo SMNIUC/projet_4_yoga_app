@@ -5,7 +5,7 @@
 // ***********************************************
 // declare namespace Cypress {
 //   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
+//     login(email: string, password: string): Chainable<string>;
 //   }
 // }
 //
@@ -41,3 +41,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+// Cypress.Commands.add('login', (email, password) => { 
+//     cy.visit('/login')
+//     cy.get('input[formControlName=email]').type(email)
+//     cy.get('input[formControlName=password]').type(password)
+//     cy.get('button[type=submit]').click()
+// })
